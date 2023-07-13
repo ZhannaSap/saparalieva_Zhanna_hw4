@@ -4,9 +4,9 @@ public class Main {
     public static int bossHealth = 700;
     public static int bossDamage = 50;
     public static String bossDefence;
-    public static int[] heroesHealth = {270, 280, 250, 300, 240, 300, 450};
-    public static int[] heroesDamage = {10, 15, 20, 0, 10, 15, 5};
-    public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic", "Medic", "Lucky", "Thor", "Golem"};
+    public static int[] heroesHealth = {270, 280, 250, 300, 240, 300, 450, 250};
+    public static int[] heroesDamage = {10, 15, 20, 0, 10, 15, 5, 10};
+    public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic", "Medic", "Lucky", "Thor", "Golem", "Berserk"};
     public static int roundNumber;
     public static void main(String[] args) {
 
@@ -19,6 +19,8 @@ public class Main {
     public static void playRound() {
         roundNumber++;
         chooseBossDefence();
+        golemTakesDamage();
+        berserkBlock();
         bossHits();
         luckyEscapeHit();
         thorStunnedBoss();
@@ -58,15 +60,24 @@ public class Main {
         Random thor = new Random();
         boolean stun = thor.nextBoolean();
         if (stun){
-            bossDamage = 0;
+            int damage = bossDamage;
+            damage = 0;
             System.out.println(heroesAttackType[5] + " stunned Boss");
         }
     }
     public static void golemTakesDamage(){
         if (heroesHealth[6] > 0 && bossHealth > 0) {
-
-
+        int damage = bossDamage/5;
+            heroesHealth[6] -= damage;
+            bossDamage -= damage;
+            System.out.println(heroesAttackType[6] + " took 20% of damage from his allies!");
         }
+    }
+
+    public static void berserkBlock (){
+        int block = bossDamage/10;
+        heroesHealth[7] += block;
+        heroesDamage[7] += block;
     }
     public static void chooseBossDefence() {
         Random random = new Random();
