@@ -19,11 +19,7 @@ public class Main {
     public static void playRound() {
         roundNumber++;
         chooseBossDefence();
-        golemTakesDamage();
-        berserkBlock();
         bossHits();
-        luckyEscapeHit();
-        thorStunnedBoss();
         healing();
         heroesHit();
         printStatistics();
@@ -32,16 +28,14 @@ public class Main {
 
     public static void healing (){
         int healing = 80;
-        boolean oneTimeHealing = false;
         for (int i = 0; i < heroesHealth.length; i++){
-            if (bossHealth >=0 && heroesHealth[3] >= 0 && heroesHealth[i] < 100  && heroesHealth[i] > 0) {
-                if (!oneTimeHealing) {
+            if ( bossHealth >=0 && heroesHealth[3] >= 0 && heroesHealth[i] < 100  && heroesHealth[i] > 0) {
                     if(heroesAttackType[i] != "Healer"){
-                    oneTimeHealing=true;
                     heroesHealth[i] += healing;
                         System.out.println( heroesAttackType[3] + " just healed hero " + heroesAttackType[i]);
+
                     }
-                }
+                break;
             }
         }
     }
