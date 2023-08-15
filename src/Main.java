@@ -4,7 +4,7 @@ public class Main {
     public static int bossHealth = 700;
     public static int bossDamage = 50;
     public static String bossDefence;
-    public static int[] heroesHealth = {270, 280, 250, 300, 240, 300, 450, 250};
+    public static int[] heroesHealth = {700, 700, 700, 300, 240, 300, 450, 250};
     public static int[] heroesDamage = {10, 15, 20, 0, 10, 15, 5, 10};
     public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic", "Medic", "Lucky", "Thor", "Golem", "Berserk"};
     public static int roundNumber;
@@ -30,7 +30,7 @@ public class Main {
         int healing = 80;
         for (int i = 0; i < heroesHealth.length; i++){
             if ( bossHealth >=0 && heroesHealth[3] >= 0 && heroesHealth[i] < 100  && heroesHealth[i] > 0) {
-                    if(heroesAttackType[i] != "Healer"){
+                    if(!heroesAttackType[i].equals("Medic")){
                     heroesHealth[i] += healing;
                         System.out.println( heroesAttackType[3] + " just healed hero " + heroesAttackType[i]);
 
