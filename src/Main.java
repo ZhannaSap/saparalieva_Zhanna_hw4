@@ -4,10 +4,11 @@ public class Main {
     public static int bossHealth = 700;
     public static int bossDamage = 50;
     public static String bossDefence;
-    public static int[] heroesHealth = {700, 700, 700, 300, 240, 300, 450, 250};
+    public static int[] heroesHealth = {700, 700, 700, 300, 240, 250, 450, 250};
     public static int[] heroesDamage = {10, 15, 20, 0, 10, 15, 5, 10};
     public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic", "Medic", "Lucky", "Thor", "Golem", "Berserk"};
     public static int roundNumber;
+
     public static void main(String[] args) {
 
         printStatistics();
@@ -16,63 +17,80 @@ public class Main {
         }
 
     }
+
     public static void playRound() {
         roundNumber++;
         chooseBossDefence();
+        golemTakesDamage();
+        thorStunnedBoss();
         bossHits();
+        luckyEscapeHit();
+        wiche();
         healing();
         heroesHit();
         printStatistics();
 
     }
 
-    public static void healing (){
+    public static void healing() {
         int healing = 80;
-        for (int i = 0; i < heroesHealth.length; i++){
-            if ( bossHealth >=0 && heroesHealth[3] >= 0 && heroesHealth[i] < 100  && heroesHealth[i] > 0) {
-                    if(heroesAttackType[i] != heroesAttackType[3]){
-                    heroesHealth[i] += healing;
-                        System.out.println( heroesAttackType[3] + " just healed hero " + heroesAttackType[i]);
+        for (int i = 0; i < heroesHealth.length; i++) {
+            if (heroesHealth[3] >= 0 && heroesHealth[i] < 100 && heroesHealth[i] > 0 && heroesAttackType[i] != heroesAttackType[3]) {
+                heroesHealth[i] += healing;
+                System.out.println(heroesAttackType[3] + " just healed hero " + heroesAttackType[i]);
 
-                    }
-                break;
+            }
+            break;
+        }
+    }
+
+    public static void luckyEscapeHit() {
+        Random escape = new Random();
+        boolean randomEscape = escape.nextBoolean();
+        if (randomEscape) {
+            if (heroesHealth[4] > 0) {
+                heroesHealth[4] += bossDamage;
+                System.out.println("Hero " + heroesAttackType[4] + " just escaped attack!!!");
             }
         }
     }
-    public static void luckyEscapeHit(){
-        Random escape = new Random();
-        boolean randomEscape = escape.nextBoolean();
-        if (randomEscape){
-            if (heroesHealth[4]>0){
-            heroesHealth[4] += bossDamage;
-            System.out.println("Hero " + heroesAttackType[4] + " just escaped attack!!!");
-        }
+
+    public static void wiche(){
+        for (int i = 0; i < heroesHealth.length; i++) {
+            if (heroesHealth[i]<0 && heroesHealth[6]>0){
+                heroesHealth[i] += heroesHealth[6];
+                heroesHealth[6] =0;
+                System.out.println("wiche saci");
+            }
         }
     }
 
-    public static void thorStunnedBoss(){
+    public static void thorStunnedBoss() {
         Random thor = new Random();
         boolean stun = thor.nextBoolean();
-        if (stun){
-            int damage = bossDamage;
-            damage = 0;
+        if (stun) {
+            bossDamage=0;
             System.out.println(heroesAttackType[5] + " stunned Boss");
+        }else{
+            bossDamage=50;
         }
     }
-    public static void golemTakesDamage(){
+
+    public static void golemTakesDamage() {
         if (heroesHealth[6] > 0 && bossHealth > 0) {
-        int damage = bossDamage/5;
+            int damage = bossDamage / 5;
             heroesHealth[6] -= damage;
             bossDamage -= damage;
             System.out.println(heroesAttackType[6] + " took 20% of damage from his allies!");
         }
     }
 
-    public static void berserkBlock (){
-        int block = bossDamage/10;
+    public static void berserkBlock() {
+        int block = bossDamage / 10;
         heroesHealth[7] += block;
         heroesDamage[7] += block;
     }
+
     public static void chooseBossDefence() {
         Random random = new Random();
         int randomIndex = random.nextInt(heroesAttackType.length); // 0,1,2
